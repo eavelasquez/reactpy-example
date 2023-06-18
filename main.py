@@ -37,6 +37,7 @@ def Footer(active_todos, completed_todos, filter_selected, on_clear_completed, o
     ) if completed_todos > 0 else ""
   )
 
+# TODO: fix filter selection
 @component
 def TodoFilters(filter_selected, on_filter_change):
   filters = [
@@ -94,6 +95,7 @@ def AddTodo(on_add_todo):
     })
   )
 
+# TODO: fix input focus using use_ref and use_effect
 @component
 def TodoItem(todo, on_remove_todo, on_toggle_todo, on_update_todo):
   new_title, set_new_title = use_state(todo["title"])
