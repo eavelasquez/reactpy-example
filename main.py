@@ -3,14 +3,18 @@ from reactpy.backend.fastapi import configure
 from fastapi import FastAPI
 
 @component
+def Item(text):
+  return html.li(text)
+
+@component
 def HelloWorld():
   return html._(
     html.div(
       html.h1("Todo List"),
       html.ul(
-        html.li("Learn React"),
-        html.li("Learn ReactPy"),
-        html.li("Build something awesome")
+        Item("Learn React"),
+        Item("Learn ReactPy"),
+        Item("Build something awesome")
       )
     )
   )
