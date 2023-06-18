@@ -11,32 +11,47 @@ def Item(text, initial_done=False):
     set_done(not done)
 
   if done:
-    return html.li(attrs, html.span(text))
+    return html.li(
+      attrs,
+      html.span(text),
+      html.button({ "on_click": toggle_done }, "Undone!")
+    )
   else:
     return html._(
       html.li(
         attrs,
-        html.span(text),
+        html.span(text, " ✔"),
         html.button({ "on_click": toggle_done }, "Done!")
       ) 
     )
 
+@component
+def DataList(items, filter_by_priority=None, sort_by_priority=False):
+  attrs = { "style": { "list-style-type": "none" } }
+
+  if filter_by_priority is not None:
+    items = [item for item in items if item["priority"] <= filter_by_priority]
+
+  if sort_by_priority:
+    items = sorted(items, key=lambda item: item["priority"])
+
+  list_items_html = [
+    Item(item["text"], item["done"]) for item in items
+  ]
+  return html.ul(attrs, list_items_html)
 
 @component
-def HelloWorld():
-  attrs = { "style": { "text-decoration": "line-through" } }
+def TodoList():
+  tasks = [
+    { "id": 1, "text": "Learn ReactPy", "done": True, "priority": 1 },
+    { "id": 2, "text": "Learn FastAPI", "done": True, "priority": 2 },
+    { "id": 3, "text": "Build something awesome!", "done": False, "priority": 3 }
+  ]
 
-  return html._(
-    html.div(
-      html.h1("Todo List"),
-      html.ul(
-        attrs,
-        Item("Learn ReactPy", True),
-        Item("Learn FastAPI", True),
-        Item("Build something awesome!", False)
-      )
-    )
+  return html.section(
+    html.h1("My Todo List"),
+    DataList(tasks, filter_by_priority=3, sort_by_priority=True),
   )
 
 app = FastAPI()
-configure(app, HelloWorld)
+configure(app, TodoList)
