@@ -1,0 +1,28 @@
+# --- Python ---
+.venv
+venv
+MANIFEST
+build
+dist
+.eggs
+*.egg-info
+__pycache__/
+*.py[cod]
+.tox
+.nox
+pip-wheel-metadata
+
+# --- PyEnv ---
+.python-version
+
+# -- Python Tests ---
+*.coverage
+*.pytest_cache
+*.mypy_cache
+
+# --- IDE ---
+.idea
+.vscode
+
+# --- JS ---
+node_modules
