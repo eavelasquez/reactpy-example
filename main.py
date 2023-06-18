@@ -1,10 +1,11 @@
-from reactpy import component, html
+from reactpy import component, html, hooks
 from reactpy.backend.fastapi import configure
 from fastapi import FastAPI
 
 @component
-def Item(text):
-  return html.li(text)
+def Item(text, done=False):
+  attrs = { "style": { "text-decoration": "line-through" } } if done else {}
+  return html.li(attrs, text)
 
 @component
 def HelloWorld():
@@ -12,9 +13,10 @@ def HelloWorld():
     html.div(
       html.h1("Todo List"),
       html.ul(
-        Item("Learn React"),
-        Item("Learn ReactPy"),
-        Item("Build something awesome")
+        { "style": { "list-style-type": "none" } },
+        Item("Learn ReactPy", True),
+        Item("Learn FastAPI", True),
+        Item("Build something awesome!", False)
       )
     )
   )
